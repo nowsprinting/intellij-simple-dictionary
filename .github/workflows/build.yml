@@ -38,8 +38,8 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required for use fields `job` and `took`
         if: failure()
 
   # Run verifyPlugin and test Gradle tasks
@@ -88,8 +88,8 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required for use fields `job` and `took`
         if: failure()
 
   # Build plugin with buildPlugin Gradle task and provide the artifact for the next workflow jobs
@@ -166,8 +166,8 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required for use fields `job` and `took`
         if: failure()
 
   # Verify built plugin using IntelliJ Plugin Verifier tool
@@ -231,8 +231,8 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required for use fields `job` and `took`
         if: failure()
 
   # Prepare a draft release for GitHub Releases page for the manual verification
@@ -296,6 +296,6 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required for use fields `job` and `took`
         if: always() # Pick up events even if the job fails or is canceled.
